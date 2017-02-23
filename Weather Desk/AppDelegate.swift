@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Weather Desk
 //
-//  Created by Joshua Bernitt on 2/23/17.
+//  Created by Joshua Bernitt on 1/1/17.
 //  Copyright © 2017 Joshua Bernitt. All rights reserved.
 //
 
