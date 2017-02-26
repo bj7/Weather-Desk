@@ -12,6 +12,7 @@ import CoreLocation
 class ViewController: NSViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager();
     let secretKey = SecretKey().key;
+    let appDelegate = NSApplication.shared().delegate as! AppDelegate;
 
     @IBOutlet weak var CurrentTemp: NSTextFieldCell!
     
@@ -51,6 +52,7 @@ class ViewController: NSViewController, CLLocationManagerDelegate {
             let temp = dictionary?["currently"] as? [String: Any];
             print((temp?["apparentTemperature"])!);
             let tempStr = (temp?["apparentTemperature"])! as? NSNumber;
+            self.appDelegate.statusItem.title = "\(tempStr!)°";
             /*
              * Simply updating the textView in this asynchronous task will not update the UI appropriately.
              * Must pass update to main thread
