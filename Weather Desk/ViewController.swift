@@ -13,7 +13,7 @@ class ViewController: NSViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager();
     let secretKey = SecretKey().key;
 
-    @IBOutlet weak var rawJSON: NSTextView!
+    @IBOutlet weak var CurrentTemp: NSTextFieldCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +46,18 @@ class ViewController: NSViewController, CLLocationManagerDelegate {
         let task = URLSession.shared.dataTask(with: url! as URL) { (data, resp, err) in
             let rawString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String;
             let json = try? JSONSerialization.jsonObject(with: data!, options: []);
-            print(json!);
+//            print(json!);
+            let dictionary = json as? [String: Any];
+            let temp = dictionary?["currently"] as? [String: Any];
+            print((temp?["apparentTemperature"])!);
+            let tempStr = (temp?["apparentTemperature"])! as? NSNumber;
             /*
              * Simply updating the textView in this asynchronous task will not update the UI appropriately.
              * Must pass update to main thread
              */
 //            self.rawJSON.string = rawString;
             DispatchQueue.main.async {
-                self.rawJSON.string = rawString;
+                self.CurrentTemp.stringValue = "\(tempStr!)";
             }
         }
         task.resume();
